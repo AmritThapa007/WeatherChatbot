@@ -1,0 +1,115 @@
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+class Chatbot extends JFrame {
+		
+	private JTextArea ca = new JTextArea();
+	private JTextField cf = new JTextField();
+	private JButton b = new JButton("SEND");
+	
+	Chatbot(){
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		setResizable(false);
+		setLayout(null);
+		setSize(400,400);
+		getContentPane().setBackground(Color.gray);
+		setTitle("Chatbot");
+		add(ca);
+		add(cf);
+		ca.setSize(300,310);
+		ca.setLocation(1, 1);
+		ca.setBackground(Color.BLACK);
+		cf.setSize(400,20);
+		cf.setLocation(1,320);
+		
+		add(b);
+		b.setSize(400,20);
+		b.setLocation(1, 340);
+	
+		
+		b.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String text = cf.getText().toLowerCase();
+				
+				ca.setForeground(Color.GREEN);
+				ca.append("You: " + text + "\n" );
+				cf.setText("");
+				
+				if(text.contains("hi")) {
+					replyMath("Hi there");
+				}
+				else if(text.contains("how are you")){
+					replyMath("I am fine. How about you?");
+				}
+				else if(text.contains("i love you")) {
+					replyMath("I am a Chatbot. I love you too");
+				}
+				else if(text.contains("bye")) {
+					replyMath("Too soon :( Anyway take care");
+				}
+				else if(text.contains("weather")) {
+					replyMath("Which city would you visit?");
+				}
+//				else if(text.contains("visit")) {
+//					String city = text.replace("visit", "").trim();
+////		            requestWeather(city);
+//				}
+				else {
+					replyMath("I can't understand.");
+				}
+			}
+		});
+	}
+//	private void requestWeather(String city) {
+//		 String apiKey = "be74631d6c15530aad0e592d5c66b18e";
+//	        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//	        try {
+//	            System.out.print("Enter city: ");
+//	            String userInput = reader.readLine().trim().replaceAll("\\s+", "+");
+//	            URL url = new URL(String.format("https://api.openweathermap.org/data/2.5/weather?q=%s&units=imperial&APPID=%s", userInput, apiKey));
+//	            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//	            connection.setRequestMethod("GET");
+//	            int responseCode = connection.getResponseCode();
+//	            if (responseCode == 404) {
+//	                System.out.println("No City Found");
+//	            } else {
+//	                BufferedReader input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//	                StringBuilder response = new StringBuilder();
+//	                String line;
+//	                while ((line = input.readLine()) != null) {
+//	                    response.append(line);
+//	                }
+//	                input.close();
+//	                String weather = response.toString().split("\"main\":\"")[1].split("\"")[0];
+//	                double temp = Math.round(Double.parseDouble(response.toString().split("\"temp\":")[1].split(",")[0]));
+//	                System.out.printf("The weather in %s is: %s%n", userInput, weather);
+//	                System.out.printf("The temperature in %s is: %.0fF%n", userInput, temp);
+//	            }
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
+//	}
+//	
+	public void replyMath(String s) {
+		 ca.append("Chatbot: " + s + "\n" );
+	 }
+}
+
+public class ChatBotWeather {
+	public static void main(String[] args) {
+		new Chatbot();
+		
+}
+}
